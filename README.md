@@ -1,2 +1,2 @@
 # WeatherAppJava
-Java weather api project
+Simple weather app for all countries with swing GUI and open api
