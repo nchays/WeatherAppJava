@@ -7,6 +7,9 @@ import java.util.*;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 public class WeatherAPI {
     private StringBuilder result;
 
@@ -65,8 +68,24 @@ public class WeatherAPI {
 
                 JSONObject current_weather = (JSONObject) countryData.get("current_weather");
 
-               // System.out.println(String.format("Temperature: %.1f\nDate and time: %s\nWind speed: %.2f km/h", current_weather.get("temperature"), current_weather.get("time"),current_weather.get("windspeed")));
-                this.result.append(String.format("Temperature: %.1f C°\nDate and time: %s\nWind speed: %.2f km/h", current_weather.get("temperature"), current_weather.get("time"),current_weather.get("windspeed")));
+                // Here begins the code I have added
+                // Get the date and time from the json file
+                String dateTimeOriginal = (String) current_weather.get("time");
+
+                // Define the format of the original date and time string
+                DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+
+                // Parse the original date/time string into a LocalDateTime object
+                LocalDateTime dateTime = LocalDateTime.parse(dateTimeOriginal, inputFormatter);
+
+                // Define the desired new format for the date/time
+                DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("MMMM dd, yyyy HH:mm a");
+
+                // Format the LocalDateTime object into a readable string
+                String formattedDateTime = dateTime.format(outputFormatter);
+
+                // System.out.println(String.format("Temperature: %.1f\nDate and time: %s\nWind speed: %.2f km/h", current_weather.get("temperature"), current_weather.get("time"),current_weather.get("windspeed")));
+                this.result.append(String.format("Temperature: %.1f C°\nDate and time: %s\nWind speed: %.2f km/h", current_weather.get("temperature"), formattedDateTime, current_weather.get("windspeed")));
 
             }
         } catch (Exception e) {
