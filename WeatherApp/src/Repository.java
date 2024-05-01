@@ -13,7 +13,8 @@ public class Repository {
     }
 
     public void fillData() throws IOException {
-        BufferedReader reader = new BufferedReader(new FileReader("Data Base/list of countries.txt"));
+        // I added "WeatherApp/" at the beginning of the path because it will not work without it
+        BufferedReader reader = new BufferedReader(new FileReader("WeatherApp/Data Base/list of countries.txt"));
         try {
             String line = reader.readLine();
 
